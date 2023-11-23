@@ -1,6 +1,6 @@
-use core::{u8};
 use crate::gpio::*;
-use embedded_hal::{adc::{Channel, OneShot}};
+use core::u8;
+use embedded_hal::adc::{Channel, OneShot};
 use msp430fr2355::ADC;
 
 pub enum SampleTime {
@@ -130,87 +130,112 @@ impl SamplingRate {
 impl Channel<Adc<ADC>> for Pin<P1, Pin0, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 0 }
+    fn channel() -> Self::ID {
+        0
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin1, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 1 }
+    fn channel() -> Self::ID {
+        1
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin2, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 2 }
+    fn channel() -> Self::ID {
+        2
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin3, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 3 }
+    fn channel() -> Self::ID {
+        3
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin4, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 4 }
+    fn channel() -> Self::ID {
+        4
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin5, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 5 }
+    fn channel() -> Self::ID {
+        5
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin6, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 6 }
+    fn channel() -> Self::ID {
+        6
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P1, Pin7, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 7 }
+    fn channel() -> Self::ID {
+        7
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P5, Pin0, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 8 }
+    fn channel() -> Self::ID {
+        8
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P5, Pin1, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 9 }
+    fn channel() -> Self::ID {
+        9
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P5, Pin2, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 10 }
+    fn channel() -> Self::ID {
+        10
+    }
 }
 
 impl Channel<Adc<ADC>> for Pin<P5, Pin3, Alternate3<Input<Floating>>> {
     type ID = u8;
 
-    fn channel() -> Self::ID { 11 }
+    fn channel() -> Self::ID {
+        11
+    }
 }
 
 pub struct Adc<ADC> {
     adc_reg: ADC,
+    is_waiting: bool
 }
 
 pub struct AdcConfig {
-    adc: ADC,
-    clock_source: ClockSource,
-    clock_divider: ClockDivider,
-    predivider: Predivider,
-    resolution: Resolution,
-    sampling_rate: SamplingRate,
-    sample_time: SampleTime,
+    pub adc: ADC,
+    pub clock_source: ClockSource,
+    pub clock_divider: ClockDivider,
+    pub predivider: Predivider,
+    pub resolution: Resolution,
+    pub sampling_rate: SamplingRate,
+    pub sample_time: SampleTime,
 }
 
 impl AdcConfig {
@@ -225,27 +250,29 @@ impl AdcConfig {
     ) -> AdcConfig {
         AdcConfig {
             adc,
-            clock_source: clock_source,
-            clock_divider: clock_divider,
-            predivider: predivider,
-            resolution: resolution,
-            sampling_rate: sampling_rate,
-            sample_time: sample_time,
+            clock_source,
+            clock_divider,
+            predivider,
+            resolution,
+            sampling_rate,
+            sample_time,
         }
     }
 
     pub fn config_hw(self) -> Adc<ADC> {
         let adc_reg = self.adc;
 
-        adc_reg.adcctl0.modify(|_, w| w.adcenc().adcenc_0()
-                                                .adcon().adcon_0()
-                                                .adcsc().adcsc_0());
+        adc_reg
+            .adcctl0
+            .modify(|_, w| w.adcenc().adcenc_0().adcon().adcon_0().adcsc().adcsc_0());
 
         let adcsht = self.sample_time.adcsht();
         adc_reg.adcctl0.modify(|_, w| w.adcsht().bits(adcsht));
 
         let adcssel = self.clock_source.adcssel();
-        adc_reg.adcctl1.modify(|_, w| w.adcssel().bits(adcssel).adcshp().adcshp_1());
+        adc_reg
+            .adcctl1
+            .modify(|_, w| w.adcssel().bits(adcssel).adcshp().adcshp_1());
 
         let adcdiv = self.clock_divider.adcdiv();
         adc_reg.adcctl1.modify(|_, w| w.adcdiv().bits(adcdiv));
@@ -259,42 +286,46 @@ impl AdcConfig {
         let adcsr = self.sampling_rate.adcsr();
         adc_reg.adcctl2.modify(|_, w| w.adcsr().bit(adcsr));
 
-        Adc { adc_reg }
+        Adc { adc_reg, is_waiting: false }
     }
 }
 
 impl Adc<ADC> {
     pub fn new(adc: ADC) -> Adc<ADC> {
-        Adc { adc_reg: adc }
+        Adc { adc_reg: adc, is_waiting: false }
     }
 
-    pub fn adc_enable(&self) {
+    pub fn adc_enable(&mut self) {
         self.adc_reg.adcctl0.modify(|_, w| w.adcon().adcon_1());
     }
 
-    pub fn adc_disable(&self) {
-        self.adc_reg.adcctl0.modify(|_, w| 
-            w.adcon().adcon_0()
-            .adcenc().adcenc_0());
+    pub fn adc_disable(&mut self) {
+        self.adc_reg
+            .adcctl0
+            .modify(|_, w| w.adcon().adcon_0().adcenc().adcenc_0());
     }
 
-    pub fn adc_start_conversion(&self) {
+    pub fn adc_start_conversion(&mut self) {
         self.adc_reg
             .adcctl0
             .modify(|_, w| w.adcenc().adcenc_1().adcsc().adcsc_1());
     }
 
     pub fn adc_is_busy(&self) -> bool {
-        return self.adc_reg.adcctl1.read().adcbusy().bit_is_set();
+        self.adc_reg.adcctl1.read().adcbusy().bit_is_set()
     }
 
     pub fn adc_get_result(&self) -> u16 {
-        return self.adc_reg.adcmem0.read().bits();
+        self.adc_reg.adcmem0.read().bits()
     }
 
-    pub fn adc_set_pin<PIN>(&self, _pin: &PIN)
-    where PIN: Channel<Adc<ADC>, ID=u8> {
-        self.adc_reg.adcmctl0.modify(|_, w| w.adcinch().bits(PIN::channel()));
+    pub fn adc_set_pin<PIN>(&mut self, _pin: &PIN)
+    where
+        PIN: Channel<Adc<ADC>, ID = u8>,
+    {
+        self.adc_reg
+            .adcmctl0
+            .modify(|_, w| w.adcinch().bits(PIN::channel()));
     }
 }
 
@@ -305,15 +336,23 @@ where
 {
     type Error = ();
 
-    fn read(&mut self, _pin: &mut PIN ) -> nb::Result<WORD, Self::Error> {
-        self.adc_disable();
-        self.adc_set_pin(_pin);
-        self.adc_enable();
+    fn read(&mut self, _pin: &mut PIN) -> nb::Result<WORD, Self::Error> {
+        if !self.is_waiting {
+            self.adc_disable();
+            self.adc_set_pin(_pin);
+            self.adc_enable();
 
-        self.adc_start_conversion();
-        while self.adc_is_busy() {}
-        let result = self.adc_get_result();
+            self.adc_start_conversion();
+            self.is_waiting = true;
+        }
 
-        Ok(result.into())
+        if !self.adc_is_busy() {
+            self.is_waiting = false;
+            let result = self.adc_get_result();
+
+            Ok(result.into())
+        } else {
+            Err(nb::Error::WouldBlock)
+        }
     }
 }

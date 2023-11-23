@@ -8,7 +8,7 @@
 
 use crate::clock::{Aclk, Clock, Smclk};
 use crate::gpio::{Alternate1, Pin, Pin1, Pin2, Pin3, Pin5, Pin6, Pin7, P1, P4};
-use crate::hw_traits::eusci::{EUsciUart, UartUcxStatw, Ucssel, UcaCtlw0};
+use crate::hw_traits::eusci::{EUsciUart, UartUcxStatw, UcaCtlw0, Ucssel};
 use core::marker::PhantomData;
 use embedded_hal::serial::{Read, Write};
 use msp430fr2355 as pac;
@@ -137,27 +137,27 @@ impl SerialUsci for pac::E_USCI_A0 {
 
 /// UCLK pin for E_USCI_A0
 pub struct UsciA0ClockPin;
-impl<DIR> Into<UsciA0ClockPin> for Pin<P1, Pin5, Alternate1<DIR>> {
+impl<DIR> From<Pin<P1, Pin5, Alternate1<DIR>>> for UsciA0ClockPin {
     #[inline(always)]
-    fn into(self) -> UsciA0ClockPin {
+    fn from(val: Pin<P1, Pin5, Alternate1<DIR>>) -> Self {
         UsciA0ClockPin
     }
 }
 
 /// Tx pin for E_USCI_A0
 pub struct UsciA0TxPin;
-impl<DIR> Into<UsciA0TxPin> for Pin<P1, Pin7, Alternate1<DIR>> {
+impl<DIR> From<Pin<P1, Pin7, Alternate1<DIR>>> for UsciA0TxPin {
     #[inline(always)]
-    fn into(self) -> UsciA0TxPin {
+    fn from(val: Pin<P1, Pin7, Alternate1<DIR>>) -> Self {
         UsciA0TxPin
     }
 }
 
 /// Rx pin for E_USCI_A0
 pub struct UsciA0RxPin;
-impl<DIR> Into<UsciA0RxPin> for Pin<P1, Pin6, Alternate1<DIR>> {
+impl<DIR> From<Pin<P1, Pin6, Alternate1<DIR>>> for UsciA0RxPin {
     #[inline(always)]
-    fn into(self) -> UsciA0RxPin {
+    fn from(val: Pin<P1, Pin6, Alternate1<DIR>>) -> Self {
         UsciA0RxPin
     }
 }
@@ -170,27 +170,27 @@ impl SerialUsci for pac::E_USCI_A1 {
 
 /// UCLK pin for E_USCI_A1
 pub struct UsciA1ClockPin;
-impl<DIR> Into<UsciA1ClockPin> for Pin<P4, Pin1, Alternate1<DIR>> {
+impl<DIR> From<Pin<P4, Pin1, Alternate1<DIR>>> for UsciA1ClockPin {
     #[inline(always)]
-    fn into(self) -> UsciA1ClockPin {
+    fn from(val: Pin<P4, Pin1, Alternate1<DIR>>) -> Self {
         UsciA1ClockPin
     }
 }
 
 /// Tx pin for E_USCI_A1
 pub struct UsciA1TxPin;
-impl<DIR> Into<UsciA1TxPin> for Pin<P4, Pin3, Alternate1<DIR>> {
+impl<DIR> From<Pin<P4, Pin3, Alternate1<DIR>>> for UsciA1TxPin {
     #[inline(always)]
-    fn into(self) -> UsciA1TxPin {
+    fn from(val: Pin<P4, Pin3, Alternate1<DIR>>) -> Self {
         UsciA1TxPin
     }
 }
 
 /// Rx pin for E_USCI_A1
 pub struct UsciA1RxPin;
-impl<DIR> Into<UsciA1RxPin> for Pin<P4, Pin2, Alternate1<DIR>> {
+impl<DIR> From<Pin<P4, Pin2, Alternate1<DIR>>> for UsciA1RxPin {
     #[inline(always)]
-    fn into(self) -> UsciA1RxPin {
+    fn from(val: Pin<P4, Pin2, Alternate1<DIR>>) -> Self {
         UsciA1RxPin
     }
 }
@@ -338,59 +338,47 @@ fn calculate_baud_config(clk_freq: u32, bps: u32) -> BaudConfig {
 }
 
 // Data from table 22-4 of MSP430FR4xx and MSP430FR2xx family user's guide (Rev. I)
-const BRS_LOOKUP_KEYS : [u16;36] =
-    [
-        0x0000, 0x00d9, 0x0125, 0x0156, 0x019a,
-        0x0201, 0x024a, 0x02ac, 0x036f, 0x038f,
-        0x0401, 0x04cd, 0x0556, 0x05b8, 0x0601,
-        0x0668, 0x06dc, 0x0701, 0x0801, 0x0925,
-        0x099b, 0x0a02, 0x0a4b, 0x0aab, 0x0b34,
-        0x0b6f, 0x0c01, 0x0c94, 0x0cce, 0x0d55,
-        0x0d8b, 0x0db7, 0x0e00, 0x0e68, 0x0eac,
-        0x0edc
-    ];
+const BRS_LOOKUP_KEYS: [u16; 36] = [
+    0x0000, 0x00d9, 0x0125, 0x0156, 0x019a, 0x0201, 0x024a, 0x02ac, 0x036f, 0x038f, 0x0401, 0x04cd,
+    0x0556, 0x05b8, 0x0601, 0x0668, 0x06dc, 0x0701, 0x0801, 0x0925, 0x099b, 0x0a02, 0x0a4b, 0x0aab,
+    0x0b34, 0x0b6f, 0x0c01, 0x0c94, 0x0cce, 0x0d55, 0x0d8b, 0x0db7, 0x0e00, 0x0e68, 0x0eac, 0x0edc,
+];
 
-const BRS_LOOKUP_VALS : [u8;36] =
-    [
-        0x00,0x01,0x02,0x04,0x08,
-        0x10,0x20,0x11,0x21,0x22,
-        0x44,0x25,0x49,0x4A,0x52,
-        0x92,0x53,0x55,0xAA,0x6B,
-        0xAD,0xB5,0xB6,0xD6,0xB7,
-        0xBB,0xDD,0xED,0xEE,0xBF,
-        0xDF,0xEF,0xF7,0xFB,0xFD,
-        0xFE
-    ];
+const BRS_LOOKUP_VALS: [u8; 36] = [
+    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x11, 0x21, 0x22, 0x44, 0x25, 0x49, 0x4A, 0x52, 0x92,
+    0x53, 0x55, 0xAA, 0x6B, 0xAD, 0xB5, 0xB6, 0xD6, 0xB7, 0xBB, 0xDD, 0xED, 0xEE, 0xBF, 0xDF, 0xEF,
+    0xF7, 0xFB, 0xFD, 0xFE,
+];
 
 #[inline(always)]
-fn binary_search_brs_table(res : u16) -> u8{
+fn binary_search_brs_table(res: u16) -> u8 {
     let mut low: usize = 0;
     let mut high: usize = BRS_LOOKUP_KEYS.len() - 1;
     while low != high {
         let mid = (low + high) >> 1;
         let key = BRS_LOOKUP_KEYS[mid];
         if res == key {
-            return BRS_LOOKUP_VALS[mid]
-        }else if high - low == 1{
+            return BRS_LOOKUP_VALS[mid];
+        } else if high - low == 1 {
             return if res < BRS_LOOKUP_KEYS[high] {
                 BRS_LOOKUP_VALS[low]
             } else {
                 BRS_LOOKUP_VALS[high]
-            }
-        }else if res > key{
+            };
+        } else if res > key {
             low = mid;
-        }else{
+        } else {
             high = mid - 1;
         }
     }
-    return BRS_LOOKUP_VALS[low];
+    BRS_LOOKUP_VALS[low]
 }
 
 #[inline(always)]
 fn lookup_brs(clk_freq: u32, bps: u32) -> u8 {
     let modulo = clk_freq % bps;
     // 12 fractional bit fixed point result
-    let fixed_point_result : u32 = (modulo << 12) / bps;
+    let fixed_point_result: u32 = (modulo << 12) / bps;
 
     // Throw away the upper bits since the fractional part is all we care about
     binary_search_brs_table(fixed_point_result as u16)
@@ -518,7 +506,7 @@ impl<USCI: SerialUsci> Rx<USCI> {
 
     /// Reads raw value from Rx buffer with no checks for validity
     #[inline(always)]
-    pub fn read_no_check(&mut self) -> u8{
+    pub fn read_no_check(&mut self) -> u8 {
         let usci = unsafe { USCI::steal() };
         usci.rx_rd()
     }
