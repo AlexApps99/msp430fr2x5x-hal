@@ -705,22 +705,22 @@ macro_rules! eusci_b_impl {
 
             #[inline(always)]
             fn transmit_ack(&self) {
-                self.$ucbxctlw0().modify(|_, w| w.uctxack().bit(true))
+                unsafe { self.$ucbxctlw0().set_bits(|w| w.uctxack().set_bit()) }
             }
 
             #[inline(always)]
             fn transmit_nack(&self) {
-                self.$ucbxctlw0().modify(|_, w| w.uctxnack().bit(true))
+                unsafe { self.$ucbxctlw0().set_bits(|w| w.uctxnack().set_bit()) }
             }
 
             #[inline(always)]
             fn transmit_start(&self) {
-                self.$ucbxctlw0().modify(|_, w| w.uctxstt().bit(true))
+                unsafe { self.$ucbxctlw0().set_bits(|w| w.uctxstt().set_bit()) }
             }
 
             #[inline(always)]
             fn transmit_stop(&self) {
-                self.$ucbxctlw0().modify(|_, w| w.uctxstp().bit(true))
+                unsafe { self.$ucbxctlw0().set_bits(|w| w.uctxstp().set_bit()) }
             }
 
             #[inline(always)]

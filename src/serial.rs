@@ -139,7 +139,7 @@ impl SerialUsci for pac::E_USCI_A0 {
 pub struct UsciA0ClockPin;
 impl<DIR> From<Pin<P1, Pin5, Alternate1<DIR>>> for UsciA0ClockPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin5, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin5, Alternate1<DIR>>) -> Self {
         UsciA0ClockPin
     }
 }
@@ -148,7 +148,7 @@ impl<DIR> From<Pin<P1, Pin5, Alternate1<DIR>>> for UsciA0ClockPin {
 pub struct UsciA0TxPin;
 impl<DIR> From<Pin<P1, Pin7, Alternate1<DIR>>> for UsciA0TxPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin7, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin7, Alternate1<DIR>>) -> Self {
         UsciA0TxPin
     }
 }
@@ -157,7 +157,7 @@ impl<DIR> From<Pin<P1, Pin7, Alternate1<DIR>>> for UsciA0TxPin {
 pub struct UsciA0RxPin;
 impl<DIR> From<Pin<P1, Pin6, Alternate1<DIR>>> for UsciA0RxPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin6, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin6, Alternate1<DIR>>) -> Self {
         UsciA0RxPin
     }
 }
@@ -172,7 +172,7 @@ impl SerialUsci for pac::E_USCI_A1 {
 pub struct UsciA1ClockPin;
 impl<DIR> From<Pin<P4, Pin1, Alternate1<DIR>>> for UsciA1ClockPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin1, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin1, Alternate1<DIR>>) -> Self {
         UsciA1ClockPin
     }
 }
@@ -181,7 +181,7 @@ impl<DIR> From<Pin<P4, Pin1, Alternate1<DIR>>> for UsciA1ClockPin {
 pub struct UsciA1TxPin;
 impl<DIR> From<Pin<P4, Pin3, Alternate1<DIR>>> for UsciA1TxPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin3, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin3, Alternate1<DIR>>) -> Self {
         UsciA1TxPin
     }
 }
@@ -190,7 +190,7 @@ impl<DIR> From<Pin<P4, Pin3, Alternate1<DIR>>> for UsciA1TxPin {
 pub struct UsciA1RxPin;
 impl<DIR> From<Pin<P4, Pin2, Alternate1<DIR>>> for UsciA1RxPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin2, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin2, Alternate1<DIR>>) -> Self {
         UsciA1RxPin
     }
 }

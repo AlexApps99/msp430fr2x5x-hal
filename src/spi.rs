@@ -55,7 +55,7 @@ impl EUsciSPIBus for pac::E_USCI_B1 {
 pub struct UsciA0MISOPin;
 impl<DIR> From<Pin<P1, Pin7, Alternate1<DIR>>> for UsciA0MISOPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin7, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin7, Alternate1<DIR>>) -> Self {
         UsciA0MISOPin
     }
 }
@@ -64,7 +64,7 @@ impl<DIR> From<Pin<P1, Pin7, Alternate1<DIR>>> for UsciA0MISOPin {
 pub struct UsciA0MOSIPin;
 impl<DIR> From<Pin<P1, Pin6, Alternate1<DIR>>> for UsciA0MOSIPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin6, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin6, Alternate1<DIR>>) -> Self {
         UsciA0MOSIPin
     }
 }
@@ -73,7 +73,7 @@ impl<DIR> From<Pin<P1, Pin6, Alternate1<DIR>>> for UsciA0MOSIPin {
 pub struct UsciA0SCLKPin;
 impl<DIR> From<Pin<P1, Pin5, Alternate1<DIR>>> for UsciA0SCLKPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin5, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin5, Alternate1<DIR>>) -> Self {
         UsciA0SCLKPin
     }
 }
@@ -82,7 +82,7 @@ impl<DIR> From<Pin<P1, Pin5, Alternate1<DIR>>> for UsciA0SCLKPin {
 pub struct UsciA0STEPin;
 impl<DIR> From<Pin<P1, Pin4, Alternate1<DIR>>> for UsciA0STEPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin4, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin4, Alternate1<DIR>>) -> Self {
         UsciA0STEPin
     }
 }
@@ -91,7 +91,7 @@ impl<DIR> From<Pin<P1, Pin4, Alternate1<DIR>>> for UsciA0STEPin {
 pub struct UsciA1MISOPin;
 impl<DIR> From<Pin<P4, Pin3, Alternate1<DIR>>> for UsciA1MISOPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin3, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin3, Alternate1<DIR>>) -> Self {
         UsciA1MISOPin
     }
 }
@@ -100,7 +100,7 @@ impl<DIR> From<Pin<P4, Pin3, Alternate1<DIR>>> for UsciA1MISOPin {
 pub struct UsciA1MOSIPin;
 impl<DIR> From<Pin<P4, Pin2, Alternate1<DIR>>> for UsciA1MOSIPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin2, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin2, Alternate1<DIR>>) -> Self {
         UsciA1MOSIPin
     }
 }
@@ -109,7 +109,7 @@ impl<DIR> From<Pin<P4, Pin2, Alternate1<DIR>>> for UsciA1MOSIPin {
 pub struct UsciA1SCLKPin;
 impl<DIR> From<Pin<P4, Pin1, Alternate1<DIR>>> for UsciA1SCLKPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin1, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin1, Alternate1<DIR>>) -> Self {
         UsciA1SCLKPin
     }
 }
@@ -118,7 +118,7 @@ impl<DIR> From<Pin<P4, Pin1, Alternate1<DIR>>> for UsciA1SCLKPin {
 pub struct UsciA1STEPin;
 impl<DIR> From<Pin<P4, Pin0, Alternate1<DIR>>> for UsciA1STEPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin0, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin0, Alternate1<DIR>>) -> Self {
         UsciA1STEPin
     }
 }
@@ -127,7 +127,7 @@ impl<DIR> From<Pin<P4, Pin0, Alternate1<DIR>>> for UsciA1STEPin {
 pub struct UsciB0MISOPin;
 impl<DIR> From<Pin<P1, Pin3, Alternate1<DIR>>> for UsciB0MISOPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin3, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin3, Alternate1<DIR>>) -> Self {
         UsciB0MISOPin
     }
 }
@@ -136,7 +136,7 @@ impl<DIR> From<Pin<P1, Pin3, Alternate1<DIR>>> for UsciB0MISOPin {
 pub struct UsciB0MOSIPin;
 impl<DIR> From<Pin<P1, Pin2, Alternate1<DIR>>> for UsciB0MOSIPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin2, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin2, Alternate1<DIR>>) -> Self {
         UsciB0MOSIPin
     }
 }
@@ -145,7 +145,7 @@ impl<DIR> From<Pin<P1, Pin2, Alternate1<DIR>>> for UsciB0MOSIPin {
 pub struct UsciB0SCLKPin;
 impl<DIR> From<Pin<P1, Pin1, Alternate1<DIR>>> for UsciB0SCLKPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin1, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin1, Alternate1<DIR>>) -> Self {
         UsciB0SCLKPin
     }
 }
@@ -154,7 +154,7 @@ impl<DIR> From<Pin<P1, Pin1, Alternate1<DIR>>> for UsciB0SCLKPin {
 pub struct UsciB0STEPin;
 impl<DIR> From<Pin<P1, Pin0, Alternate1<DIR>>> for UsciB0STEPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin0, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin0, Alternate1<DIR>>) -> Self {
         UsciB0STEPin
     }
 }
@@ -163,7 +163,7 @@ impl<DIR> From<Pin<P1, Pin0, Alternate1<DIR>>> for UsciB0STEPin {
 pub struct UsciB1MISOPin;
 impl<DIR> From<Pin<P4, Pin7, Alternate1<DIR>>> for UsciB1MISOPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin7, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin7, Alternate1<DIR>>) -> Self {
         UsciB1MISOPin
     }
 }
@@ -172,7 +172,7 @@ impl<DIR> From<Pin<P4, Pin7, Alternate1<DIR>>> for UsciB1MISOPin {
 pub struct UsciB1MOSIPin;
 impl<DIR> From<Pin<P4, Pin6, Alternate1<DIR>>> for UsciB1MOSIPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin6, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin6, Alternate1<DIR>>) -> Self {
         UsciB1MOSIPin
     }
 }
@@ -181,7 +181,7 @@ impl<DIR> From<Pin<P4, Pin6, Alternate1<DIR>>> for UsciB1MOSIPin {
 pub struct UsciB1SCLKPin;
 impl<DIR> From<Pin<P4, Pin5, Alternate1<DIR>>> for UsciB1SCLKPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin5, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin5, Alternate1<DIR>>) -> Self {
         UsciB1SCLKPin
     }
 }
@@ -190,7 +190,7 @@ impl<DIR> From<Pin<P4, Pin5, Alternate1<DIR>>> for UsciB1SCLKPin {
 pub struct UsciB1STEPin;
 impl<DIR> From<Pin<P4, Pin4, Alternate1<DIR>>> for UsciB1STEPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin4, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin4, Alternate1<DIR>>) -> Self {
         UsciB1STEPin
     }
 }
@@ -310,6 +310,18 @@ impl<USCI: EUsciSPIBus> SPIPins<USCI> {
 pub enum SPIErr {
     /// Function not implemented
     Unimplemented = 0,
+}
+
+impl<USCI: EUsciSPIBus> hal::blocking::spi::Transfer<u8> for SPIPins<USCI> {
+    type Error = SPIErr;
+
+    fn transfer<'w>(&mut self, words: &'w mut [u8]) -> Result<&'w [u8], Self::Error> {
+        for word in words.iter_mut() {
+            nb::block!(self.send(*word))?;
+            *word = nb::block!(self.read())?;
+        }
+        Ok(words)
+    }
 }
 
 impl<USCI: EUsciSPIBus> hal::blocking::spi::Write<u8> for SPIPins<USCI> {

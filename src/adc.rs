@@ -225,7 +225,7 @@ impl Channel<Adc<ADC>> for Pin<P5, Pin3, Alternate3<Input<Floating>>> {
 
 pub struct Adc<ADC> {
     adc_reg: ADC,
-    is_waiting: bool
+    is_waiting: bool,
 }
 
 pub struct AdcConfig {
@@ -286,13 +286,19 @@ impl AdcConfig {
         let adcsr = self.sampling_rate.adcsr();
         adc_reg.adcctl2.modify(|_, w| w.adcsr().bit(adcsr));
 
-        Adc { adc_reg, is_waiting: false }
+        Adc {
+            adc_reg,
+            is_waiting: false,
+        }
     }
 }
 
 impl Adc<ADC> {
     pub fn new(adc: ADC) -> Adc<ADC> {
-        Adc { adc_reg: adc, is_waiting: false }
+        Adc {
+            adc_reg: adc,
+            is_waiting: false,
+        }
     }
 
     pub fn adc_enable(&mut self) {

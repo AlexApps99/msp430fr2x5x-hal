@@ -119,7 +119,7 @@ impl EUsciI2CBus for pac::E_USCI_B1 {
 pub struct UsciB0SCLPin;
 impl<DIR> From<Pin<P1, Pin3, Alternate1<DIR>>> for UsciB0SCLPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin3, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin3, Alternate1<DIR>>) -> Self {
         UsciB0SCLPin
     }
 }
@@ -128,7 +128,7 @@ impl<DIR> From<Pin<P1, Pin3, Alternate1<DIR>>> for UsciB0SCLPin {
 pub struct UsciB0SDAPin;
 impl<DIR> From<Pin<P1, Pin2, Alternate1<DIR>>> for UsciB0SDAPin {
     #[inline(always)]
-    fn from(val: Pin<P1, Pin2, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P1, Pin2, Alternate1<DIR>>) -> Self {
         UsciB0SDAPin
     }
 }
@@ -137,7 +137,7 @@ impl<DIR> From<Pin<P1, Pin2, Alternate1<DIR>>> for UsciB0SDAPin {
 pub struct UsciB1SCLPin;
 impl<DIR> From<Pin<P4, Pin7, Alternate1<DIR>>> for UsciB1SCLPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin7, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin7, Alternate1<DIR>>) -> Self {
         UsciB1SCLPin
     }
 }
@@ -146,7 +146,7 @@ impl<DIR> From<Pin<P4, Pin7, Alternate1<DIR>>> for UsciB1SCLPin {
 pub struct UsciB1SDAPin;
 impl<DIR> From<Pin<P4, Pin6, Alternate1<DIR>>> for UsciB1SDAPin {
     #[inline(always)]
-    fn from(val: Pin<P4, Pin6, Alternate1<DIR>>) -> Self {
+    fn from(_val: Pin<P4, Pin6, Alternate1<DIR>>) -> Self {
         UsciB1SDAPin
     }
 }
@@ -534,11 +534,7 @@ impl<USCI: EUsciI2CBus> WriteRead<TenBitAddress> for SDL<USCI> {
 
 impl<USCI: EUsciI2CBus> Transactional<SevenBitAddress> for SDL<USCI> {
     type Error = I2CErr;
-    fn exec(
-        &mut self,
-        address: u8,
-        operations: &mut [Operation<'_>],
-    ) -> Result<(), Self::Error> {
+    fn exec(&mut self, address: u8, operations: &mut [Operation<'_>]) -> Result<(), Self::Error> {
         self.set_addressing_mode(AddressingMode::SevenBit);
         SDL::exec(self, address as u16, operations)
     }
@@ -546,11 +542,7 @@ impl<USCI: EUsciI2CBus> Transactional<SevenBitAddress> for SDL<USCI> {
 
 impl<USCI: EUsciI2CBus> Transactional<TenBitAddress> for SDL<USCI> {
     type Error = I2CErr;
-    fn exec(
-        &mut self,
-        address: u16,
-        operations: &mut [Operation<'_>],
-    ) -> Result<(), Self::Error> {
+    fn exec(&mut self, address: u16, operations: &mut [Operation<'_>]) -> Result<(), Self::Error> {
         self.set_addressing_mode(AddressingMode::TenBit);
         SDL::exec(self, address, operations)
     }
